@@ -111,7 +111,7 @@ app.post('/register',(req,res) =>{
         .then(trx.commit)
         .catch(trx.rollback)
     })
-        .catch(err => res.status(400).json('Unable to join'))
+        .catch(err => res.status(400).json(err))
     
 })
 app.post('/addcert', (req, res)=>{
