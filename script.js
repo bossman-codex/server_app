@@ -116,7 +116,7 @@ app.post('/register',(req,res) =>{
 })
 app.post('/addcert', (req, res)=>{
     const {companyname ,testname,item,itemid} = req.body
-    database('AddCertificate')
+    database('AddCerificate')
     .returning("*")
     .insert({
         CompanyName: companyname,
