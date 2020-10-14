@@ -8,12 +8,11 @@ const knex = require('knex')
 
 
 const database = knex({
-    client: 'mssql',
+     client: 'mssql',
     connection: {
-      host : 'LAPTOP-IERQ707F',
-      user : 'Login',
-      password : "1234567",
-      port: 1433,
+      host : 'eu-az-sql-serv1.database.windows.net',
+      user : 'myusername',
+      password : "Supermans1!",
       database : 'AdminLogin',
       options: {
         "enableArithAbort": true,
