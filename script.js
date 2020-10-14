@@ -98,7 +98,7 @@ app.post('/register',(req,res) =>{
         .into('Logins')
         .returning('email')
         .then(loginEmail =>{
-            return trx('person')
+            return trx('persons')
             .returning('*')
             .insert({
                 email:loginEmail,
