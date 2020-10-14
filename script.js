@@ -35,14 +35,14 @@ app.post ('/signin', (req,res) => {
     if (!email  || !password) {
         return res.status(400).json("incorrect form submission")
     }
-  database.select('email' , "password")
+  database.select('Email' , "password")
   .from('Logins')
-  .where('email' , "=" , email)
+  .where('Email' , "=" , email)
   .then(data =>{
     const isValid = bcrypt.compareSync(password , data[0].password)
     if (isValid) {
        return database.select('*').from ('person')
-        .where('email', '=', email)
+        .where('Email', '=', email)
         .then(user =>{
             res.status(200).json(user[0])
         })
