@@ -116,6 +116,9 @@ app.post('/register',(req,res) =>{
 })
 app.post('/addcert', (req, res)=>{
     const {companyname ,testname,item,itemid} = req.body
+    if (!companyname || !testname || !item || !itemid) {
+        return res.status(400).json("incorrect form submission")
+    }
     database('AddCertificate')
     .returning("*")
     .insert({
