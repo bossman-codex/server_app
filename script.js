@@ -111,7 +111,7 @@ app.post('/register',(req,res) =>{
         .then(trx.commit)
         .catch(trx.rollback)
     })
-        .catch(err => res.status(400).json(err))
+        .catch(err => res.status(400).json("Wrong cred"))
     
 })
 app.post('/addcert', (req, res)=>{
@@ -127,9 +127,9 @@ app.post('/addcert', (req, res)=>{
         Item: item,
         ItemIdentification : itemid
     }).then(user =>{ 
-        res.status(200).json(user)
+        res.status(200).json(user[0])
         }) 
-        .catch(err=> res.status(400).json(err))
+        .catch(err=> res.status(400).json("wrong cred"))
 })
 
 
