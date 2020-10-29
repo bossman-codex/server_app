@@ -25,7 +25,7 @@ const database = knex({
     //   password : "Possible2020!!",
     //   database : "adminlog",
       timezone: 'utc',
-      port: "3306"
+    //   port: "3306"
 }
   });
 
