@@ -219,7 +219,7 @@ app.post('/addcert', (req, res)=>{
     .then(user =>{ 
         res.status(200).json("success")
         }) 
-        .catch(err=> res.status(400).json("wrong cred"))
+        .catch(err=> res.status(400).json(err))
 })
 
 
