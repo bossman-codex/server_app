@@ -202,8 +202,8 @@ app.post('/addcert', (req, res)=>{
         return result;
      }
 
-    const {companyname,testname,item,itemid,expires,refnumber} = req.body
-    if (!companyname||!testname||!item||!itemid||!refnumber||!expires) {
+    const {companyname,testname,item,itemid,refnumber} = req.body
+    if (!companyname||!testname||!item||!itemid||!refnumber) {
         return res.status(400).json("incorrect form submission")
     }
     database('addcertificate')
@@ -213,7 +213,7 @@ app.post('/addcert', (req, res)=>{
         Item: item,
         ItemIdentification : itemid,
         RefNumber : refnumber,
-        Expires:expires,
+        // Expires:expires,
         CertificateNumber: makeid(5)
     })
     .then(user =>{ 
