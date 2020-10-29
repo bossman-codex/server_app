@@ -16,9 +16,11 @@ const database = knex({
     version: '15.1',
     
     connection: {
-      host : '208.75.149.34',
-      user : 'checkire_ad',
-      password : "Possible2020!!",
+      host : '127.0.0.1',
+      user:"root",
+      password:"",
+    //   user : 'checkire_ad',
+    //   password : "Possible2020!!",
       database : 'checkire_admin',
       timezone: 'utc'
 }
