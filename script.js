@@ -16,7 +16,7 @@ const database = knex({
     version: '15.1',
     
     connection: {
-      host : 'heroku--server.herokuapp.com',
+      host : '208.75.149.34',
       user : 'checkire_ad',
       password : "Possible2020!!",
       database : 'checkire_admin',
