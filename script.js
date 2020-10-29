@@ -20,15 +20,14 @@ const database = knex({
         user : "u0868718_vcv",
         password : "Possible2020!",
         database : "u0868718_xcx",
-    //   host : "db4free.net",
-    //   user : "adminlogger",
-    //   password : "Possible2020!!",
-    //   database : "adminlog",
-      timezone: 'utc',
-    //   port: "3306"
+        timezone: 'utc',
+   
 }
   });
-
+   //   host : "db4free.net",
+    //   user : "adminlogger",
+    //   password : "Possible2020!!",
+    //   database : "adminlog", //   port: "3306"
 const app = express()
 
 app.use(BodyParser.json())
