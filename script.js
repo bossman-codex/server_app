@@ -16,7 +16,7 @@ const database = knex({
     version: '15.1',
     
     connection: {
-        host : "six.qservers.net",
+        host : "localhost",
         user : "checkire_ad",
         password : "element2020!1",
         database : "checkire_admin",
@@ -25,7 +25,7 @@ const database = knex({
     //   password : "Possible2020!!",
     //   database : "adminlog",
       timezone: 'utc',
-    //   port: "2082"
+      port: "3360"
 }
   });
 
