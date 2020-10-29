@@ -21,7 +21,7 @@ const database = knex({
       password:"",
     //   user : 'checkire_ad',
     //   password : "Possible2020!!",
-      database : 'checkire_admin',
+      database : 'adminlogin',
       timezone: 'utc'
 }
   });
