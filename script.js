@@ -16,14 +16,18 @@ const database = knex({
     version: '15.1',
     
     connection: {
-        host : "scp68.hosting.reg.ru",
-        user : "u0868718_vcv",
-        password : "Possible2020!",
-        database : "u0868718_xcx",
+      host : "db4free.net",
+      user : "adminlogger",
+      password : "Possible2020!!",
+      database : "adminlog", 
         timezone: 'utc',
-   
+   //   port: "3306"
 }
-  });
+  }); 
+  // host : "scp68.hosting.reg.ru",
+        // user : "u0868718_vcv",
+        // password : "Possible2020!",
+        // database : "u0868718_xcx",
    //   host : "db4free.net",
     //   user : "adminlogger",
     //   password : "Possible2020!!",
