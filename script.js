@@ -16,12 +16,10 @@ const database = knex({
     version: '15.1',
     
     connection: {
-      host : '127.0.0.1',
-      user:"root",
-      password:"",
-    //   user : 'checkire_ad',
-    //   password : "Possible2020!!",
-      database : 'adminlogin',
+      host : "six.qservers.net",
+      user : "checkire_ad",
+      password : "element2020!1",
+      database : "checkire_admin",
       timezone: 'utc'
 }
   });
