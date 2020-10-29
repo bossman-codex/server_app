@@ -16,7 +16,7 @@ const database = knex({
     version: '15.1',
     
     connection: {
-      host : '208.75.149.34',
+      host : '67.225.142.191',
       user : 'checkire_ad',
       password : "Possible2020!!",
       database : 'checkire_admin',
