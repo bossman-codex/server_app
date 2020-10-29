@@ -16,10 +16,10 @@ const database = knex({
     version: '15.1',
     
     connection: {
-        host : "localhost",
-        user : "checkire_ad",
-        password : "element2020!1",
-        database : "checkire_admin",
+        host : "scp68.hosting.reg.ru",
+        user : "u0868718_vcv",
+        password : "Possible2020!",
+        database : "u0868718_xcx",
     //   host : "db4free.net",
     //   user : "adminlogger",
     //   password : "Possible2020!!",
