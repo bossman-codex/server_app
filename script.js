@@ -201,10 +201,11 @@ app.post('/addcert', (req, res)=>{
         }
         return result;
      }
-    const {companyname ,testname,item,itemid,expires,refnumber} = req.body
-    if (!companyname||!testname||!item||!itemid||!expires||!refnumber) {
-        return res.status(400).json("incorrect form submission")
-    }
+
+    const {companyname,testname,item,itemid,expires,refnumber} = req.body
+    // if (!companyname||!testname||!item||!itemid||!refnumber||!expires) {
+    //     return res.status(400).json("incorrect form submission")
+    // }
     database('addcertificate')
     .insert({
         "Company Name": companyname,
