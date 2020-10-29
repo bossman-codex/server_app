@@ -5,30 +5,42 @@ const BodyParser = require("body-parser")
 const cors = require('cors')
 const bcrypt = require('bcrypt-nodejs')
 const knex = require('knex')
+const fileUpload = require("express-fileupload")
+const FileType = require('file-type')
+const multer = require('multer');
+const path = require("path")
 
 
 const database = knex({
-     client: 'mssql',
+    client: 'mysql',
+    version: '15.1',
+    
     connection: {
-      host : 'eu-az-sql-serv1.database.windows.net',
-      user : 'myusername',
-      password : "Supermans1!",
-      database : 'AdminLogin',
-      options: {
-        "enableArithAbort": true,
-        'encrypt': true 
-    }
+      host : 'verify.checkirem.com',
+      user : 'checkire_ad',
+      password : "Possible2020!!",
+      database : 'checkire_admin',
+      timezone: 'utc'
 }
   });
 
 const app = express()
 
 app.use(BodyParser.json())
+app.use(BodyParser.urlencoded({ extended: false }))
 app.use(cors())
+app.use(fileUpload())
+app.use(express.static('uploads')); //to access the files in public folder
+ 
+
+
     
 app.get('/' , (req , res) =>  {
     res.send("its working")
 })
+
+
+
 
 app.post ('/signin', (req,res) => {
     const{email ,password} = req.body
@@ -36,42 +48,63 @@ app.post ('/signin', (req,res) => {
         return res.status(400).json("incorrect form submission")
     }
   database.select('email' , "password")
-  .from('Logins')
+  .from('user_details')
   .where('email' , "=" , email)
   .then(data =>{
     const isValid = bcrypt.compareSync(password , data[0].password)
     if (isValid) {
        return database.select('*').from ('persons')
         .where('email', '=', email)
+        
         .then(user =>{
             res.status(200).json(user[0])
         })
+        .then(users =>{
+        database.insert
+       ({
+           email: email,
+           Time_LoggedIn:new Date()
+
+        })
+       .into("logins")
+      .then(user=>{
+        res.status(200).json()
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+        })
+
         .catch(err => res.status(400).json("unable to connect"))
     }else{
         res.status(400).json("Wrong credentials")
     }
   })
+ 
+  
   .catch(err => res.status(400).json("Wrong credentials"))
 })
 
-app.post('/search', (req ,res) =>{
-   database.select('certificatenumber').from("addcertificate")
-   .where('certificatenumber',"=", req.body.cert)
-  .then(user =>{
-      const isCorrect = req.body.cert == user[0].certificatenumber
 
-         if (isCorrect) {
-               database.select('*').from('addcertificate')
-               .where('certificatenumber' ,'=',req.body.cert)
-               .then(user =>{ 
-                    res.status(200).json(user[0])
-               })
-               .catch(err => res.status(400).json(err))
-         } 
+
+// app.post('/search', (req ,res) =>{
+//    database.select('certificatenumber').from("addcertificate")
+//    .where('certificatenumber',"=", req.body.cert)
+//   .then(user =>{
+//       const isCorrect = req.body.cert == user[0].certificatenumber
+
+//          if (isCorrect) {
+//                database.select('*').from('addcertificate')
+//                .where('certificatenumber' ,'=',req.body.cert)
+//                .then(user =>{ 
+//                     res.status(200).json(user[0])
+//                })
+//                .catch(err => res.status(400).json(err))
+//          } 
           
-        })
-        .catch(err => res.status(400).json("bad "))
-  })
+//         })
+//         .catch(err => res.status(400).json("bad "))
+//   })
   
 
 
@@ -95,45 +128,150 @@ app.post('/register',(req,res) =>{
             password:hash,
             email:email
         })
-        .into('Logins')
-        .returning('email')
+        .into('user_details') 
         .then(loginEmail =>{
             return trx('persons')
-            .returning('*')
             .insert({
-                email:loginEmail,
-                name:name
-            })
-            .then(user =>{
-                res.json(user[0])
+                Email:email,
+                Name:name
+            }) 
+            .then(user =>{ 
+                res.status(200).json("success")
                 })
             })
         .then(trx.commit)
         .catch(trx.rollback)
     })
-        .catch(err => res.status(400).json("Wrong cred"))
+        .catch(err => res.status(400).json(err))
     
 })
+app.post("/update" , (req, res) =>{
+    const {companyname ,testname,item,itemid,refnumber,expires,certnumber} = req.body 
+   database('addcertificate')
+  .where('Certificate Number', "=", certnumber)
+  .then(user=>{
+      const isCorrect = certnumber === user[0]["CertificateNumber"]
+    if(isCorrect){
+    database('addcertificate')
+    .where('Certificate Number', "=", certnumber)
+    .update({
+    "Company Name": companyname,
+    "Test Name": testname,
+    Item: item,
+    "Item Identification" : itemid,
+    "Ref Number" : refnumber,
+    Expires:expires
+  }).then(user =>{ 
+    res.status(200).json("user")
+    }) 
+    .catch(err=> res.status(400).json("error"))
+    }
+    
+  })
+ .catch(err=> res.status(400).json("invalid"))
+})
+
+app.post("/delete" , (req, res) =>{
+    const {cert} = req.body 
+   database('addcertificate')
+   .where('Certificate number', cert)
+   .then(user=>{
+    const isCorrect = cert === user[0]["Certificate Number"]
+    if(isCorrect){
+      database('addcertificate')
+   .where('Certificate number', cert)
+   .del()
+   .then(user =>{ 
+    res.status(200).json("user")
+    }) 
+    .catch(err=> res.status(400).json("user"))  
+    }
+    })
+    .catch(err=> res.status(400).json("invalid"))  
+})
+   
 app.post('/addcert', (req, res)=>{
-    const {companyname ,testname,item,itemid} = req.body
-    if (!companyname || !testname || !item || !itemid) {
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
+    const {companyname ,testname,item,itemid,expires,refnumber} = req.body
+    if (!companyname||!testname||!item||!itemid||!expires||!refnumber) {
         return res.status(400).json("incorrect form submission")
     }
-    database('AddCertificate')
-    .returning("*")
+    database('addcertificate')
     .insert({
-        CompanyName: companyname,
-        TestName: testname,
+        "Company Name": companyname,
+        "Test Name": testname,
         Item: item,
-        ItemIdentification : itemid
-    }).then(user =>{ 
-        res.status(200).json(user[0])
+        "Item Identification" : itemid,
+        "Ref Number" : refnumber,
+        Expires:expires,
+        "Certificate Number" : makeid(5)
+    })
+    .then(user =>{ 
+        res.status(200).json("success")
         }) 
         .catch(err=> res.status(400).json("wrong cred"))
 })
 
 
+app.post('/upload', (req, res) => {
+    const certnumber = req.body.Certnumber
+    
+     
+    database('addcertificate')
+    .where('Certificate number', certnumber)
+    .then(user=>{
+        const isCorrect = certnumber === user[0]['Certificate Number']
+        
+        const myFile = req.files.file;
+         if (!req.files) {
+        return res.status(500).send({ msg: "file is not found" })
+       }if(isCorrect){
+       database('image')
+       .insert({
+        Name:certnumber,
+        "product image":myFile.name,
+        image:myFile.data
+      }) 
+        .then(user =>{ 
+        res.status(200).json("success")
+        }) 
+        .catch(err=> res.status(400).json(err))
+         }
+        })
+       .catch(err=>res.status(400).json(err))
+})
+        // accessing the file
+    
+  
 
 
 
+app.post('/image', (req, res) => {
+ database.select('name').from("image").where('name',"=", req.body.certnumber)
+.then(user=>{
+     const isCorrect = req.body.certnumber == user[0].name
+                if (isCorrect) {
+               database.select('image').from('image')
+                 .where('name' ,'=',req.body.certnumber) 
+                 .then(users=>{
+                res.status(200).json(users)
+                 })
+                 .catch(err=>{
+                   console.log(err)
+                 })     
+                }  
+             } ) 
+             .catch(err=>res.status(400).json("error"))
+            } )
+                
+   
+   
 app.listen(process.env.PORT || 3030)
