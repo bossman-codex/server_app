@@ -149,18 +149,18 @@ app.post('/register',(req,res) =>{
 app.post("/update" , (req, res) =>{
     const {companyname ,testname,item,itemid,refnumber,expires,certnumber} = req.body 
    database('addcertificate')
-  .where('Certificate Number', "=", certnumber)
+  .where(CertificateNumber, "=", certnumber)
   .then(user=>{
       const isCorrect = certnumber === user[0]["CertificateNumber"]
     if(isCorrect){
     database('addcertificate')
-    .where('Certificate Number', "=", certnumber)
+    .where(CertificateNumber, "=", certnumber)
     .update({
-    "Company Name": companyname,
-    "Test Name": testname,
+    CompanyName: companyname,
+    TestName: testname,
     Item: item,
-    "Item Identification" : itemid,
-    "Ref Number" : refnumber,
+    ItemIdentification : itemid,
+    RefNumber : refnumber,
     Expires:expires
   }).then(user =>{ 
     res.status(200).json("user")
@@ -175,12 +175,12 @@ app.post("/update" , (req, res) =>{
 app.post("/delete" , (req, res) =>{
     const {cert} = req.body 
    database('addcertificate')
-   .where('Certificate number', cert)
+   .where(Certificatenumber, cert)
    .then(user=>{
-    const isCorrect = cert === user[0]["Certificate Number"]
+    const isCorrect = cert === user[0].CertificateNumber
     if(isCorrect){
       database('addcertificate')
-   .where('Certificate number', cert)
+   .where(Certificatenumber, cert)
    .del()
    .then(user =>{ 
     res.status(200).json("user")
@@ -203,18 +203,18 @@ app.post('/addcert', (req, res)=>{
      }
 
     const {companyname,testname,item,itemid,expires,refnumber} = req.body
-    // if (!companyname||!testname||!item||!itemid||!refnumber||!expires) {
-    //     return res.status(400).json("incorrect form submission")
-    // }
+    if (!companyname||!testname||!item||!itemid||!refnumber||!expires) {
+        return res.status(400).json("incorrect form submission")
+    }
     database('addcertificate')
     .insert({
-        "Company Name": companyname,
-        "Test Name": testname,
+        CompanyName: companyname,
+        TestName: testname,
         Item: item,
-        "Item Identification" : itemid,
-        "Ref Number" : refnumber,
+        ItemIdentification : itemid,
+        RefNumber : refnumber,
         Expires:expires,
-        "Certificate Number" : makeid(5)
+        CertificateNumber: makeid(5)
     })
     .then(user =>{ 
         res.status(200).json("success")
@@ -228,9 +228,9 @@ app.post('/upload', (req, res) => {
     
      
     database('addcertificate')
-    .where('Certificate number', certnumber)
+    .where(Certificatenumber, certnumber)
     .then(user=>{
-        const isCorrect = certnumber === user[0]['Certificate Number']
+        const isCorrect = certnumber === user[0].CertificateNumber
         
         const myFile = req.files.file;
          if (!req.files) {
@@ -239,7 +239,7 @@ app.post('/upload', (req, res) => {
        database('image')
        .insert({
         Name:certnumber,
-        "product image":myFile.name,
+        productimage:myFile.name,
         image:myFile.data
       }) 
         .then(user =>{ 
