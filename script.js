@@ -157,12 +157,12 @@ app.post('/register',(req,res) =>{
 app.post("/update" , (req, res) =>{
     const {companyname ,testname,item,itemid,refnumber,expires,certnumber} = req.body 
    database('addcertificate')
-  .where(CertificateNumber, "=", certnumber)
+  .where("CertificateNumber", "=", certnumber)
   .then(user=>{
       const isCorrect = certnumber === user[0].CertificateNumber
     if(isCorrect){
     database('addcertificate')
-    .where(CertificateNumber, "=", certnumber)
+    .where("CertificateNumber", "=", certnumber)
     .update({
     CompanyName: companyname,
     TestName: testname,
@@ -183,7 +183,7 @@ app.post("/update" , (req, res) =>{
 app.post("/delete" , (req, res) =>{
     const {cert} = req.body 
    database('addcertificate')
-   .where(Certificatenumber, cert)
+   .where("Certificatenumber", cert)
    .then(user=>{
     const isCorrect = cert === user[0].CertificateNumber
     if(isCorrect){
@@ -233,10 +233,8 @@ app.post('/addcert', (req, res)=>{
 
 app.post('/upload', (req, res) => {
     const certnumber = req.body.Certnumber
-    
-     
     database('addcertificate')
-    .where(Certificatenumber, certnumber)
+    .where("CertificateNumber", certnumber)
     .then(user=>{
         const isCorrect = certnumber === user[0].CertificateNumber
         
