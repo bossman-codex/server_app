@@ -183,9 +183,9 @@ app.post("/update" , (req, res) =>{
 app.post("/delete" , (req, res) =>{
     const {cert} = req.body 
    database('addcertificate')
-   .where("Certificatenumber", cert)
+   .where("CertificateNumber", cert)
    .then(user=>{
-    const isCorrect = cert === user[0].Certificatenumber
+    const isCorrect = cert === user[0].CertificateNumber
     if(isCorrect){
       database('addcertificate')
    .where(Certificatenumber, cert)
