@@ -188,7 +188,7 @@ app.post("/delete" , (req, res) =>{
     const isCorrect = cert === user[0].CertificateNumber
     if(isCorrect){
       database('addcertificate')
-   .where(Certificatenumber, cert)
+   .where(CertificateNumber, cert)
    .del()
    .then(user =>{ 
     res.status(200).json("user")
@@ -241,8 +241,6 @@ app.post('/upload', (req, res) => {
     .where("CertificateNumber", certnumber)
     .then(user=>{
         const isCorrect = certnumber === user[0].CertificateNumber
-        
-        
          if (!req.files) {
         return res.status(500).send({ msg: "file is not found" })
        }if(isCorrect){
