@@ -185,7 +185,7 @@ app.post("/delete" , (req, res) =>{
    database('addcertificate')
    .where("Certificatenumber", cert)
    .then(user=>{
-    const isCorrect = cert === user[0].CertificateNumber
+    const isCorrect = cert === user[0].Certificatenumber
     if(isCorrect){
       database('addcertificate')
    .where(Certificatenumber, cert)
@@ -233,12 +233,16 @@ app.post('/addcert', (req, res)=>{
 
 app.post('/upload', (req, res) => {
     const certnumber = req.body.Certnumber
+    const myFile = req.files.file;
+    if (!certnumber||!myFile) {
+        return res.status(400).json("incorrect form submission")
+    }
     database('addcertificate')
     .where("CertificateNumber", certnumber)
     .then(user=>{
         const isCorrect = certnumber === user[0].CertificateNumber
         
-        const myFile = req.files.file;
+        
          if (!req.files) {
         return res.status(500).send({ msg: "file is not found" })
        }if(isCorrect){
