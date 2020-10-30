@@ -33,9 +33,6 @@ const database = knex({
     //   database : "adminlog", 
     //     timezone: 'utc',
   
-  database("*").from("addcertificate").then(data=>{
-      console.log(data)
-  })
 const app = express()
 
 app.use(BodyParser.json())
@@ -162,7 +159,7 @@ app.post("/update" , (req, res) =>{
    database('addcertificate')
   .where(CertificateNumber, "=", certnumber)
   .then(user=>{
-      const isCorrect = certnumber === user[0]["CertificateNumber"]
+      const isCorrect = certnumber === user[0].CertificateNumber
     if(isCorrect){
     database('addcertificate')
     .where(CertificateNumber, "=", certnumber)
