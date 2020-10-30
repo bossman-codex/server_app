@@ -13,25 +13,29 @@ const path = require("path")
 
 const database = knex({
     client: 'mysql',
-    version: '15.1',
+    // version: '15.1',
     
-    connection: {
-      host : "db4free.net",
-      user : "adminlogger",
-      password : "Possible2020!!",
-      database : "adminlog", 
-        timezone: 'utc',
-   //   port: "3306"
+    connection: {  
+        host : "sql7.freemysqlhosting.net",
+        user : "sql7373498",
+        password : "GgyZMTHrM5",
+        database : "sql7373498",
+        port: "3306"
 }
-  }); 
-  // host : "scp68.hosting.reg.ru",
-        // user : "u0868718_vcv",
-        // password : "Possible2020!",
-        // database : "u0868718_xcx",
-   //   host : "db4free.net",
+  });  
+  //host : "six.qservers.net",
+    //   user : "checkire_ad",
+    //   password : "element2020!1",
+    //   database : "checkire_admin"
+        //     host : "db4free.net",
     //   user : "adminlogger",
     //   password : "Possible2020!!",
-    //   database : "adminlog", //   port: "3306"
+    //   database : "adminlog", 
+    //     timezone: 'utc',
+  
+  database("*").from("addcertificate").then(data=>{
+      console.log(data)
+  })
 const app = express()
 
 app.use(BodyParser.json())
