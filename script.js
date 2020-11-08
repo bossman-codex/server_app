@@ -6,9 +6,9 @@ const cors = require('cors')
 const bcrypt = require('bcrypt-nodejs')
 const knex = require('knex')
 const fileUpload = require("express-fileupload")
-const FileType = require('file-type')
-const multer = require('multer');
-const path = require("path")
+// const FileType = require('file-type')
+// const multer = require('multer');
+// const path = require("path")
 
 
 const database = knex({
@@ -16,11 +16,15 @@ const database = knex({
     // version: '15.1',
     
     connection: {  
-        host : "sql7.freemysqlhosting.net",
-        user : "sql7373498",
-        password : "GgyZMTHrM5",
-        database : "sql7373498",
-        port: "3306"
+        host : "127.0.0.1",
+        user: "root",
+        password: "",
+        database: "adminlogin"
+        // host : "sql7.freemysqlhosting.net",
+        // user : "sql7373498",
+        // password : "GgyZMTHrM5",
+        // database : "sql7373498",
+        // port: "3306"
 }
   });  
   //host : "six.qservers.net",
@@ -180,24 +184,28 @@ app.post("/update" , (req, res) =>{
  .catch(err=> res.status(400).json("invalid"))
 })
 
-app.post("/delete" , (req, res) =>{
+app.post("/delete", (req, res) =>{
     const {cert} = req.body 
-   database('addcertificate')
-   .where("CertificateNumber", cert)
+    database('addcertificate')
+   .where("CertificateNumber","=", cert)
    .then(user=>{
     const isCorrect = cert === user[0].CertificateNumber
     if(isCorrect){
-      database('addcertificate')
-   .where("CertificateNumber", cert)
-   .del()
-   .then(user =>{ 
-    res.status(200).json("user")
-    }) 
-    .catch(err=> res.status(400).json("user"))  
-    }
+database.raw(
+"DELETE addcertificate ,image FROM addcertificate INNER JOIN image ON image.Name = addcertificate.CertificateNumber  WHERE addcertificate.CertificateNumber = ?", cert)   
+            .then(user =>{ 
+            res.status(200).json("user")
+            }) 
+            .catch(err=> res.status(400).json(err))  
+          
+        } 
     })
-    .catch(err=> res.status(400).json("invalid"))  
+    .catch(err=> res.status(400).json("errorname"))  
 })
+    
+   
+
+
    
 app.post('/addcert', (req, res)=>{
     function makeid(length) {
