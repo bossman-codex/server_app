@@ -16,11 +16,15 @@ const database = knex({
     // version: '15.1',
     
     connection: {  
-        host : "sql7.freemysqlhosting.net",
-        user : "sql7373498",
-        password : "GgyZMTHrM5",
-        database : "sql7373498",
-        port: "3306"
+        host : "127.0.0.1",
+        user: "root",
+        password: "",
+        database: "adminlogin"
+        // host : "sql7.freemysqlhosting.net",
+        // user : "sql7373498",
+        // password : "GgyZMTHrM5",
+        // database : "sql7373498",
+        // port: "3306"
 }
   });  
   //host : "six.qservers.net",
