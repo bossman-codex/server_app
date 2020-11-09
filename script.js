@@ -17,9 +17,9 @@ const database = knex({
     
     connection: {  
         host : "sql7.freemysqlhosting.net",
-        user : "sql7373498",
-        password : "GgyZMTHrM5",
-        database : "sql7373498",
+        user : "sql7375540",
+        password : "WYxvpAGRpf",
+        database : "sql7375540",
         port: "3306"
 }
   });  
