@@ -16,10 +16,11 @@ const database = knex({
     // version: '15.1',
     
     connection: {  
-        host : "sql7.freemysqlhosting.net",
-        user : "sql7375540",
-        password : "WYxvpAGRpf",
-        database : "sql7375540",
+        host : "sql2.freemysqlhosting.net",
+        user : "sql2378915",
+        password : "nG5!yV1*",
+        database : "sql2378915",
+        timezone: 'utc',
         port: "3306"
 }
   });  
@@ -31,7 +32,7 @@ const database = knex({
     //   user : "adminlogger",
     //   password : "Possible2020!!",
     //   database : "adminlog", 
-    //     timezone: 'utc',
+    
   
 const app = express()
 
