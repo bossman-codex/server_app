@@ -97,24 +97,24 @@ app.post ('/signin', (req,res) => {
 
 
 
-// app.post('/search', (req ,res) =>{
-//    database.select('certificatenumber').from("addcertificate")
-//    .where('certificatenumber',"=", req.body.cert)
-//   .then(user =>{
-//       const isCorrect = req.body.cert == user[0].certificatenumber
+app.post('/search', (req ,res) =>{
+   database.select('certificatenumber').from("addcertificate")
+   .where('certificatenumber',"=", req.body.cert)
+  .then(user =>{
+      const isCorrect = req.body.cert == user[0].certificatenumber
 
-//          if (isCorrect) {
-//                database.select('*').from('addcertificate')
-//                .where('certificatenumber' ,'=',req.body.cert)
-//                .then(user =>{ 
-//                     res.status(200).json(user[0])
-//                })
-//                .catch(err => res.status(400).json(err))
-//          } 
+         if (isCorrect) {
+               database.select('*').from('addcertificate')
+               .where('certificatenumber' ,'=',req.body.cert)
+               .then(user =>{ 
+                    res.status(200).json(user[0])
+               })
+               .catch(err => res.status(400).json(err))
+         } 
           
-//         })
-//         .catch(err => res.status(400).json("bad "))
-//   })
+        })
+        .catch(err => res.status(400).json("bad "))
+  })
   
 
 
