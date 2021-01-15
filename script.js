@@ -16,22 +16,15 @@ const database = knex({
     // version: '15.1',
     
     connection: {  
-        host : "sql2.freemysqlhosting.net",
-        user : "sql2378915",
-        password : "nG5!yV1*",
-        database : "sql2378915",
+        host : "td5l74lo6615qq42.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        user : "bek3mottkjf9nnem",
+        password : "hawx00o976zmdyk8",
+        database : "vy8yrbnvp03vgeua",
         timezone: 'utc',
         port: "3306"
 }
   });  
-  //host : "six.qservers.net",
-    //   user : "checkire_ad",
-    //   password : "element2020!1",
-    //   database : "checkire_admin"
-        //     host : "db4free.net",
-    //   user : "adminlogger",
-    //   password : "Possible2020!!",
-    //   database : "adminlog", 
+  
     
   
 const app = express()
@@ -113,7 +106,7 @@ app.post('/search', (req ,res) =>{
          } 
           
         })
-        .catch(err => res.status(400).json("bad "))
+        .catch(err => res.status(400).json("bad"))
   })
   
 
