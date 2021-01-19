@@ -194,7 +194,23 @@ database.raw(
 })
     
    
-
+app.post("/delimage", (req , res) =>{
+    const {cert} = req.body
+        database('image')
+        .where('name', "=" ,cert)
+        .then(user=>{
+            const isCorrect = cert === user[0].CertificateNumber
+            if(isCorrect){
+                database('image')
+                .where('name', "=" ,cert)
+                .del()
+            }
+            res.status(200).json("done")
+        })
+        .catch(
+            err=> res.status(404).json("wrong")
+        )       
+}) 
 
    
 app.post('/addcert', (req, res)=>{
