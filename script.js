@@ -199,7 +199,7 @@ app.post("/delimage", (req , res) =>{
         database('image')
         .where('name', "=" ,cert)
         .then(user=>{
-            const isCorrect = cert === user[0].CertificateNumber
+            const isCorrect = cert === user[0].name
             if(isCorrect){
                 database('image')
                 .where('name', "=" ,cert)
