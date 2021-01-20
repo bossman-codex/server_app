@@ -192,23 +192,39 @@ database.raw(
     })
     .catch(err=> res.status(400).json("errorname"))  
 })
-    
+ 
+
    
 app.post("/delimage", (req , res) =>{
     const {cert} = req.body
-        database('image')
-        .where('name', "=" ,cert)
-        .then(user=>{
-            const isCorrect = cert === user[0].name
-            if(isCorrect){
+    database('addcertificate')
+    .where("CertificateNumber","=", cert)
+    .then(user=>{
+     const isCorrect = cert === user[0].CertificateNumber
+     if(isCorrect){
                 database('image')
                 .where('name', "=" ,cert)
-                .del()
-            }
-            res.status(200).json("done")
+                .then(user=>{
+                    const image = user[0] == undefined
+                    console.log(image)
+                    if (image == false) {
+                        database('image')
+                        .where('name', "=" ,cert)
+                        .del()
+                        .then(users=>{
+                            res.status(200).json("done")
+                        })
+                        .catch(
+                            err=> res.status(404).json(err)
+                        )      
+                    } else {
+                        res.status(404).json("NO IMAGE")
+                    }
+                 })
+            }      
         })
         .catch(
-            err=> res.status(404).json("wrong")
+            err=> res.status(404).json("wrong Cert Number")
         )       
 }) 
 
