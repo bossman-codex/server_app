@@ -16,10 +16,10 @@ const database = knex({
     // version: '15.1',
     
     connection: {  
-        host : "td5l74lo6615qq42.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-        user : "bek3mottkjf9nnem",
-        password : "hawx00o976zmdyk8",
-        database : "vy8yrbnvp03vgeua",
+        host : process.env.HOST,
+        user : process.env.USER,
+        password : process.env.PASSWORD,
+        database : process.env.DATABASE,
         timezone: 'utc',
         port: "3306"
 }
